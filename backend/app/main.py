@@ -6,7 +6,7 @@ Creates and configures the FastAPI app instance.
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import get_settings
-from app.routes import health
+from app.routes import health, game, room
 
 settings = get_settings()
 
@@ -34,8 +34,10 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
-    # Register health check routes
+    # Register routes
     app.include_router(health.router)
+    app.include_router(game.router)
+    app.include_router(room.router)
 
     # Root endpoint
     @app.get("/")

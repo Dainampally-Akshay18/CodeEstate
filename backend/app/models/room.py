@@ -23,18 +23,10 @@ class Room(BaseModel):
     Represents a game room that contains players and tracks the game state.
     """
     
-    model_config = ConfigDict(extra="ignore", validate_assignment=True)
-    
-    room_id: str = Field(..., description="Unique room identifier")
-    status: RoomStatus = Field(default=RoomStatus.WAITING, description="Current room status")
-    players: List[str] = Field(default_factory=list, description="List of player IDs in room")
-    game_state: dict = Field(..., description="GameState object representing current game state")
-    created_at: datetime = Field(default_factory=datetime.utcnow, description="Room creation timestamp")
-    expires_at: Optional[datetime] = Field(None, description="Room expiration timestamp (for cleanup)")
-    
-    class Config:
-        """Pydantic config for serialization."""
-        json_schema_extra = {
+    model_config = ConfigDict(
+        extra="ignore",
+        validate_assignment=True,
+        json_schema_extra={
             "example": {
                 "room_id": "room_1",
                 "status": "playing",
@@ -52,3 +44,11 @@ class Room(BaseModel):
                 "expires_at": None
             }
         }
+    )
+    
+    room_id: str = Field(..., description="Unique room identifier")
+    status: RoomStatus = Field(default=RoomStatus.WAITING, description="Current room status")
+    players: List[str] = Field(default_factory=list, description="List of player IDs in room")
+    game_state: dict = Field(..., description="GameState object representing current game state")
+    created_at: datetime = Field(default_factory=datetime.utcnow, description="Room creation timestamp")
+    expires_at: Optional[datetime] = Field(None, description="Room expiration timestamp (for cleanup)")

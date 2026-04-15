@@ -27,19 +27,11 @@ class GameState(BaseModel):
     All game modifications happen through this model.
     """
     
-    model_config = ConfigDict(use_enum_values=True, extra="ignore", validate_assignment=True)
-    
-    room_id: str = Field(..., description="Unique room identifier")
-    players: List[dict] = Field(..., description="List of Player objects in the game")
-    properties: List[dict] = Field(..., description="List of all Property objects on board")
-    current_turn: int = Field(default=0, ge=0, description="Index of current player's turn")
-    dice: List[int] = Field(default_factory=lambda: [0, 0], description="Last dice roll result [die1, die2]")
-    phase: GamePhase = Field(default=GamePhase.WAITING, description="Current game phase")
-    winner: Optional[str] = Field(None, description="Player ID of winner, None if game not ended")
-    
-    class Config:
-        """Pydantic config for serialization."""
-        json_schema_extra = {
+    model_config = ConfigDict(
+        use_enum_values=True,
+        extra="ignore",
+        validate_assignment=True,
+        json_schema_extra={
             "example": {
                 "room_id": "room_1",
                 "players": [
@@ -72,3 +64,12 @@ class GameState(BaseModel):
                 "winner": None
             }
         }
+    )
+    
+    room_id: str = Field(..., description="Unique room identifier")
+    players: List[dict] = Field(..., description="List of Player objects in the game")
+    properties: List[dict] = Field(..., description="List of all Property objects on board")
+    current_turn: int = Field(default=0, ge=0, description="Index of current player's turn")
+    dice: List[int] = Field(default_factory=lambda: [0, 0], description="Last dice roll result [die1, die2]")
+    phase: GamePhase = Field(default=GamePhase.WAITING, description="Current game phase")
+    winner: Optional[str] = Field(None, description="Player ID of winner, None if game not ended")
