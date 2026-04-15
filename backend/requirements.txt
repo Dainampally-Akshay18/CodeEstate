@@ -1,0 +1,25 @@
+# FastAPI and Web Framework
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+
+# Firebase Integration
+firebase-admin
+
+# JSON Web Token
+PyJWT
+
+# CORS Support
+python-multipart
+
+# Environment Variables
+python-dotenv
+
+# Development & Testing
+pytest
+pytest-asyncio
+black
+flake8
+mypy
+
