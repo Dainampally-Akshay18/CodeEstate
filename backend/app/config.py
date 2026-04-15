@@ -6,10 +6,13 @@ Loads Firebase credentials and app settings from .env file.
 import os
 from functools import lru_cache
 from pydantic_settings import BaseSettings
+from pydantic import ConfigDict
 
 
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
+
+    model_config = ConfigDict(env_file=".env", case_sensitive=False, extra="ignore")
 
     # Firebase Configuration
     firebase_type: str = os.getenv("TYPE", "")
@@ -29,11 +32,6 @@ class Settings(BaseSettings):
     app_name: str = "Tech Monopoly"
     app_version: str = "1.0.0"
     debug: bool = os.getenv("DEBUG", "False").lower() == "true"
-
-    class Config:
-        """Pydantic config."""
-        env_file = ".env"
-        case_sensitive = False
 
 
 @lru_cache()
